@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const authController = require('../controllers/AuthController');
 //routes for /api/auth
 
 /**
@@ -9,10 +9,7 @@ const router = express.Router();
  * @access Public
  */
 
-router.post('/register', (req, res) => {
-  //TODO: Register function
-  res.send('register completed');
-});
+router.post('/register', authController.auth_register);
 
 /**
  * @route POST /api/auth/login
@@ -20,11 +17,6 @@ router.post('/register', (req, res) => {
  * @access Private
  */
 
-router.post('/login', (req, res) => {
-  //TODO: Authentication
-  //TODO: Login function
-
-  res.send('Login Completed');
-});
+router.post('/login', authController.authLogin);
 
 module.exports = router;
