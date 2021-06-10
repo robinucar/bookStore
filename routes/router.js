@@ -1,11 +1,16 @@
 const express = require('express');
+const AuthRouter = require('./AuthRouter');
 
 const router = express.Router();
 
 //only  /api endpoint
-router.get('/', (req, res) => {
-  console.log('Api Page');
-  res.send('Api Page');
-});
+
+/**
+ * @route /api/auth
+ * @desc Route for Auth
+ *
+ *
+ */
+router.use('/auth', AuthRouter);
 
 module.exports = router;
