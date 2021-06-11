@@ -6,7 +6,15 @@ exports.auth_register = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
 
   //TODO: VALIDATION
-  //TODO: CHECK ALREADY REGISTERED
+
+  // CHECK ALREADY REGISTERED (email)
+
+  const userData = await User.findOne({ email });
+  if (userData) {
+    return res
+      .status(400)
+      .json({ errors: [{ message: 'Users already exist' }] });
+  }
 
   //BCRYPT PASSWORD
   const salt = await bcrypt.genSalt(10);
