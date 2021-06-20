@@ -1,12 +1,15 @@
 const User = require('../model/UserModel');
 const bcrypt = require('bcryptjs');
+const { check, validationResult } = require('express-validator');
 exports.auth_register = async (req, res) => {
-  //TODO: Register function
-
+  //Register function
   const { firstName, lastName, email, password } = req.body;
 
   //TODO: VALIDATION
-
+  const validationErr = validationResult(req);
+  if (validationErr?.errors?.length > 0) {
+    return res.status(400).json({ errors: validationErr.array() });
+  }
   // CHECK ALREADY REGISTERED (email)
 
   const userData = await User.findOne({ email });
