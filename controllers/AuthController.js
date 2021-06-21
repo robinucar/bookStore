@@ -37,8 +37,21 @@ exports.auth_register = async (req, res) => {
   res.send('Register completed');
 };
 
-exports.authLogin = (req, res) => {
-  //TODO: Authentication
-  //TODO: Login Function
+exports.authLogin = async (req, res) => {
+  //Field Validation
+  const { email, password } = req.body;
+  const validationErr = validationResult(req);
+  if (validationErr?.errors?.length > 0) {
+    return res.status(400).json({ errors: validationErr.array() });
+  }
+
+  //User exist?
+  const userData = await User.findOne({ email });
+  if (!userData) {
+    return res.status(400).json({ errors: [{ message: 'User is not exist' }] });
+  }
+
+  //Todo3: password compare
+  //Todo4: authentication return JWT
   res.send('Login completed');
 };

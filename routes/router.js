@@ -1,5 +1,6 @@
 const express = require('express');
 const AuthRouter = require('./AuthRouter');
+const ProfileRouter = require('./ProfileRouter');
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ const router = express.Router();
  *
  */
 router.use('/auth', AuthRouter);
+router.use('/profile', ProfileRouter);
 
 module.exports = router;
