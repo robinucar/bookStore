@@ -1,5 +1,6 @@
 const User = require('../model/UserModel');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 exports.auth_register = async (req, res) => {
   //Register function
@@ -51,7 +52,25 @@ exports.authLogin = async (req, res) => {
     return res.status(400).json({ errors: [{ message: 'User is not exist' }] });
   }
 
-  //Todo3: password compare
-  //Todo4: authentication return JWT
-  res.send('Login completed');
+  //password compare
+
+  const isPasswordMatch = await bcrypt.compare(password, userData.password);
+  if (!isPasswordMatch) {
+    return res
+      .status(400)
+      .json({ errors: [{ message: 'Password is not correct' }] });
+  }
+
+  //authentication return JWT
+  jwt.sign(
+    { userData },
+    process.env.JWT_SECRET_KEY,
+    { expiresIn: 3600 },
+    (err, token) => {
+      if (err) {
+        return res.status(400).json({ errors: [{ message: 'Unknown Eror' }] });
+      }
+      res.send(token);
+    }
+  );
 };
