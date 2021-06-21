@@ -49,7 +49,9 @@ exports.authLogin = async (req, res) => {
   //User exist?
   const userData = await User.findOne({ email });
   if (!userData) {
-    return res.status(400).json({ errors: [{ message: 'User is not exist' }] });
+    return res
+      .status(400)
+      .json({ errors: [{ message: 'User does not exist' }] });
   }
 
   //password compare
