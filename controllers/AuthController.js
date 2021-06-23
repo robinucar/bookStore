@@ -72,7 +72,7 @@ exports.authLogin = async (req, res) => {
       if (err) {
         return res.status(400).json({ errors: [{ message: 'Unknown Eror' }] });
       }
-      res.send(token);
+      res.status(202).json({ token });
     }
   );
 };
